@@ -13,6 +13,29 @@ ENV DJANGO_CONFIGURATION Local
 
 # Install whatever is needed for your production environment.
 
+{% if cookiecutter.install_dev %}
+# Install some common development utilities.
+RUN apt-get update \
+    && apt-get install -y -q software-properties-common \
+                             command-not-found \
+                             build-essential \
+                             tig \
+                             man \
+                             atool \
+                             wget \
+                             curl \
+                             htop \
+                             aptitude \
+                             psmisc \
+                             nano \
+                             vim \
+                             git
+                             subversion \
+                             atfs \
+    && apt-get install -y -q --no-install-recommends mercurial \
+    && apt-get clean && /var/lib/apt/lists/* /tmp/* /var/tmp/*
+{% endif %}
+
 # For example: you could install your app requirements with your
 # package manager of choice.
 ADD ./requirements $APP_DIR/requirements
