@@ -1,0 +1,42 @@
+{% if cookiecutter.docker_repository %}
+repository: {{ cookiecutter.docker_repository }}
+{% endif %}
+name: {{ cookiecutter.repo_name }}
+
+web:
+  image: /{{ cookiecutter.repo_name }}:production
+  binds:
+    - app_data
+
+  links:
+    - postgres
+    - redis
+
+  start_options:
+    - restart_policy: always
+    - port_bindings: {7100: 80}
+
+  create_options:
+    - detach: True
+    - working_dir: /app
+    - command: /app/docker/entrypoints/web.sh
+    - environment: {}
+
+postgres:
+  image: /postgres
+  uses:
+    - db-data
+db-data:
+  image: /busybox
+  shares:
+    - postgres_data
+
+redis:
+  image: /redis
+
+volumes:
+  postgres_data: /var/lib/postgresql/data
+  app_data: /app
+
+host:
+  app_data: .
