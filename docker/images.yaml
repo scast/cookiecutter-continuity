@@ -7,7 +7,7 @@ common:
     tag: {{ cookiecutter.repo_name }}:common
     dockerfile: docker/common/Dockerfile
     nocache: True
-    rm: true
+    rm: True
 
 production:
   depends: common
@@ -20,7 +20,7 @@ production:
     tag: {{ cookiecutter.repo_name }}:production
     dockerfile: docker/production/Dockerfile
     nocache: True
-    rm: true
+    rm: True
 
 development:
   depends: production
@@ -32,7 +32,7 @@ development:
     tag: {{ cookiecutter.repo_name }}:development
     dockerfile: docker/development/Dockerfile
     nocache: True
-    rm: true
+    rm: True
 
 local:
   depends: common
@@ -45,7 +45,7 @@ local:
     tag: {{ cookiecutter.repo_name }}:local
     dockerfile: docker/local/Dockerfile
     nocache: True
-    rm: true
+    rm: True
 
 testing:
   depends: common
@@ -58,4 +58,4 @@ testing:
     tag: {{ cookiecutter.repo_name }}:testing
     dockerfile: docker/testing/Dockerfile
     nocache: True
-    rm: true
+    rm: True
