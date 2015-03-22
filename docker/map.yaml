@@ -2,41 +2,85 @@
 repository: {{ cookiecutter.docker_repository }}
 {% endif %}
 name: {{ cookiecutter.repo_name }}
+settings: &settings
+  project_name: {{ cookiecutter.repo_name }}
+  remote_ref: origin/master
+  working_ref: origin/development
+  containers:
+    - web
 
-web:
-  image: /{{ cookiecutter.repo_name }}:production
-  binds:
-    - app_data
+common: &common
+  postgres:
+    image: /postgres
+    uses:
+      - db-data
+  db-data:
+    image: /busybox
+    shares:
+      - postgres_data
 
-  links:
-    - postgres
-    - redis
+  redis:
+    image: /redis
 
-  start_options:
-    - restart_policy: always
-    - port_bindings: {7100: 80}
+  volumes:
+    postgres_data: /var/lib/postgresql/data
+    app_data: /app
 
-  create_options:
-    - detach: True
-    - working_dir: /app
-    - command: /app/docker/entrypoints/web.sh
-    - environment: {}
+  host:
+    app_data: .
 
-postgres:
-  image: /postgres
-  uses:
-    - db-data
-db-data:
-  image: /busybox
-  shares:
-    - postgres_data
+production: &production
+  <<: *common
 
-redis:
-  image: /redis
+  settings:
+    <<: *settings
+    site_url: {{ cookiecutter.domain_name }}
+    user: {{ cookiecutter.repo_name }}
 
-volumes:
-  postgres_data: /var/lib/postgresql/data
-  app_data: /app
+  web:
+    image: /{{ cookiecutter.repo_name }}:production
 
-host:
-  app_data: .
+    binds:
+      - app_data
+
+    links:
+      - postgres
+      - redis
+
+    start_options:
+      - restart_policy: always
+      - port_bindings: {7100: 80}
+
+    create_options:
+      - command: /app/docker/entrypoints/web.sh
+      - detach: True
+      - working_dir: /app
+      - environment: {}
+
+development: &development
+  <<: *production
+
+  settings:
+    <<: *settings
+    site_url: dev.{{ cookiecutter.domain_name }}
+    user: {{ cookiecutter.repo_name }}
+
+  web:
+    image: /{{ cookiecutter.repo_name }}:development
+
+    binds:
+      - app_data
+
+    links:
+      - postgres
+      - redis
+
+    start_options:
+      - restart_policy: always
+      - port_bindings: {7100: 80}
+
+    create_options:
+      - command: /app/docker/entrypoints/web.sh
+      - detach: True
+      - working_dir: /app
+      - environment: {}
