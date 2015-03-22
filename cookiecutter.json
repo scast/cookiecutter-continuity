@@ -1,0 +1,9 @@
+{
+    "full_name": "Your Name",
+    "email": "your_email@your_domain.com",
+    "project_name": "Project Name",
+    "repo_name": "{{ cookiecutter.project_name|replace(' ', '_') }}",
+    "base_image": "ubuntu:trusty",
+    "install_base": true,
+    "install_dev": true
+}

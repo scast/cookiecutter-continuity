@@ -1,0 +1,43 @@
+FROM {{ cookiecutter.base_image }}
+MAINTAINER {{ cookiecutter.full_name }} <{{ cookiecutter.email }}>
+
+# Setup application environment variables. Feel free to add any
+# variable here that you might need across all your
+# environments. Remember, do not secret API keys here.
+
+# The application name for these images.
+ENV APP_NAME {{ cookiecutter.repo_name }}
+
+# Where in the docker container will the application be stored.
+ENV APP_DIR /app
+
+{% if cookiecutter.install_base %}
+# Install some common headers and utilities to be available across all
+# environments. If you need some others, just add them at the end.
+RUN apt-get update && apt-get install -y -q libjpeg-dev \
+                                            libjpeg8-dev \
+                                            python-dev \
+                                            postgresql-server-dev-9.3 \
+                                            postgresql-client-9.3 \
+                                            python \
+                                            python-pip \
+                                            python-setuptools \
+                                            ruby \
+                                            ruby1.9.1-dev \
+                                            libxml2-dev \
+                                            libxslt-dev \
+                                            lib32z1-dev \
+    && apt-get clean && /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+{% else %}
+# You can add headers and common system files that you might need here.
+# RUN apt-get update && apt-get install -y -q dep1 \
+#                                             dep2 \
+#     && apt-get clean && /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+{% endif %}
+
+# You can install anything else you need now.  For example, you could
+# install your application base requirements below.
+ADD ./requirements $APP_DIR/requirements
+RUN pip install -r $APP_DIR/requirements/base.txt
