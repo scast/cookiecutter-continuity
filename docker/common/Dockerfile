@@ -27,6 +27,10 @@ RUN apt-get update && apt-get install -y -q libjpeg-dev \
                                             libxml2-dev \
                                             libxslt-dev \
                                             lib32z1-dev \
+                                            software-properties-common \
+    && add-apt-repository ppa:chris-lea/node.js -y \
+    && apt-get update \
+    && apt-get install -y -q nodejs \
     && apt-get clean && /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 {% else %}
