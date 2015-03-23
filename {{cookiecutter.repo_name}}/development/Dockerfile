@@ -1,4 +1,4 @@
-FROM {{ cookiecutter.repo_name }}:production
+FROM {{ cookiecutter.app_name }}:production
 MAINTAINER {{ cookiecutter.full_name }} <{{ cookiecutter.email }}>
 
 # Setup application environment variables. Feel free to add any

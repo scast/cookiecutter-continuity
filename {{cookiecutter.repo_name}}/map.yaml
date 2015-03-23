@@ -1,9 +1,9 @@
 {% if cookiecutter.docker_repository %}
 repository: {{ cookiecutter.docker_repository }}
 {% endif %}
-name: {{ cookiecutter.repo_name }}
+name: {{ cookiecutter.app_name }}
 settings: &settings
-  project_name: {{ cookiecutter.repo_name }}
+  project_name: {{ cookiecutter.app_name }}
   remote_ref: origin/master
   working_ref: origin/development
   containers:
@@ -35,10 +35,10 @@ production: &production
   settings:
     <<: *settings
     site_url: {{ cookiecutter.domain_name }}
-    user: {{ cookiecutter.repo_name }}
+    user: {{ cookiecutter.app_name }}
 
   web:
-    image: /{{ cookiecutter.repo_name }}:production
+    image: /{{ cookiecutter.app_name }}:production
 
     binds:
       - app_data
@@ -63,10 +63,10 @@ development: &development
   settings:
     <<: *settings
     site_url: dev.{{ cookiecutter.domain_name }}
-    user: {{ cookiecutter.repo_name }}
+    user: {{ cookiecutter.app_name }}
 
   web:
-    image: /{{ cookiecutter.repo_name }}:development
+    image: /{{ cookiecutter.app_name }}:development
 
     binds:
       - app_data

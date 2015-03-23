@@ -6,7 +6,7 @@ MAINTAINER {{ cookiecutter.full_name }} <{{ cookiecutter.email }}>
 # environments. Remember, do not secret API keys here.
 
 # The application name for these images.
-ENV APP_NAME {{ cookiecutter.repo_name }}
+ENV APP_NAME {{ cookiecutter.app_name }}
 
 # Where in the docker container will the application be stored.
 ENV APP_DIR /app

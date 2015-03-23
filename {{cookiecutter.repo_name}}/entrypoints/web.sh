@@ -3,7 +3,7 @@
 # A reference entrypoint for running a django gunicorn webserver.
 
 export DBUSER=postgres
-export DBNAME={{ cookiecutter.repo_name }}
+export DBNAME={{ cookiecutter.app_name }}
 export DBHOST=$POSTGRES_PORT_5432_TCP_ADDR
 export DBPORT=$POSTGRES_PORT_5432_TCP_PORT
 

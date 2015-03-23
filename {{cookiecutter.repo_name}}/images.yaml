@@ -4,7 +4,7 @@ common:
     - requirements/base.txt
 
   build:
-    tag: {{ cookiecutter.repo_name }}:common
+    tag: {{ cookiecutter.app_name }}:common
     dockerfile: docker/common/Dockerfile
     nocache: True
     rm: True
@@ -17,7 +17,7 @@ production:
     - requirements/production.txt
 
   build:
-    tag: {{ cookiecutter.repo_name }}:production
+    tag: {{ cookiecutter.app_name }}:production
     dockerfile: docker/production/Dockerfile
     nocache: True
     rm: True
@@ -29,7 +29,7 @@ development:
     - docker/development/Dockerfile
 
   build:
-    tag: {{ cookiecutter.repo_name }}:development
+    tag: {{ cookiecutter.app_name }}:development
     dockerfile: docker/development/Dockerfile
     nocache: True
     rm: True
@@ -42,7 +42,7 @@ local:
     - requirements/local.txt
 
   build:
-    tag: {{ cookiecutter.repo_name }}:local
+    tag: {{ cookiecutter.app_name }}:local
     dockerfile: docker/local/Dockerfile
     nocache: True
     rm: True
@@ -55,7 +55,7 @@ testing:
     - requirements/local.txt
 
   build:
-    tag: {{ cookiecutter.repo_name }}:testing
+    tag: {{ cookiecutter.app_name }}:testing
     dockerfile: docker/testing/Dockerfile
     nocache: True
     rm: True
