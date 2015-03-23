@@ -88,6 +88,26 @@ development: &development
 local:
   <<: *common
 
+  web:
+    image: /{{ cookiecutter.app_name }}:local
+
+    binds:
+      - app_data
+
+    links:
+      - postgres
+      - redis
+
+    start_options:
+      - restart_policy: always
+      - port_bindings: {7100: 80}
+
+    create_options:
+      - command: /app/docker/entrypoints/local.sh
+      - detach: True
+      - working_dir: /app
+      - environment: {}
+
 testing:
   <<: *common
 
