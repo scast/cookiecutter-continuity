@@ -2,7 +2,7 @@ FROM {{ cookiecutter.app_name }}:common
 MAINTAINER {{ cookiecutter.full_name }} <{{ cookiecutter.email }}>
 
 # Setup application environment variables. Feel free to add any
-# variable here that you might need for testing purposes.
+# variable here that you might need for your local environment.
 
 # The image environment
 ENV APP_ENVIRONMENT local
