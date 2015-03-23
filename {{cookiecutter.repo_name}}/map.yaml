@@ -88,6 +88,9 @@ development: &development
 local:
   <<: *common
 
+  settings:
+    <<: *settings
+
   web:
     image: /{{ cookiecutter.app_name }}:local
 
@@ -110,6 +113,9 @@ local:
 
 testing:
   <<: *common
+
+  settings:
+    <<: *settings
 
   runner:
     image: /{{ cookiecutter.app_name}}:testing
