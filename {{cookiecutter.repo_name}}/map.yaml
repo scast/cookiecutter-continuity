@@ -84,3 +84,29 @@ development: &development
       - detach: True
       - working_dir: /app
       - environment: {}
+
+local:
+  <<: *common
+
+testing:
+  <<: *common
+
+  runner:
+    image: /{{ cookiecutter.app_name}}:testing
+
+    binds:
+      - app_data
+
+    links:
+      - postgres
+      - redis
+
+    start_options:
+      - restart_policy: always
+      - port_bindings: {7100: 80}
+
+    create_options:
+      - command: /app/docker/entrypoints/runner.sh
+      - detach: True
+      - working_dir: /app
+      - environment: {}
