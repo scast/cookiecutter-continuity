@@ -16,4 +16,4 @@ ENV DJANGO_CONFIGURATION Local
 # For example: you could install your app requirements with your
 # package manager of choice.
 ADD ./requirements $APP_DIR/requirements
-RUN pip install -r $APP_DIR/requirements/$APP_ENVIRONMENT.txt
+RUN pip install -r $APP_DIR/requirements/test.txt
